@@ -1,5 +1,6 @@
-# M2-Embedded_TemperatureControlChair
-Embedded Mini Project on Temperature Control Chair
+# M2-Embedded_TemperatureControlChair - Varadaraju Dileep Kumar
+## Temperature Control System
+The **Temperature control system** is basically used to control the temperature of a chair. When a user seated on a chair, the button sensor gets activated. After that, the user gets access to turn on the heater or cooler. The temperature sensor keeps monitoring the temperature and sends the analog value to the microcontroller. The microcontroller processes the analog input of the temperature sensor and outputs a temperature value through serial communication. All the activities of the control system are done on a microcontroller called Atmega328.
 
 ## Folder Structure
 
