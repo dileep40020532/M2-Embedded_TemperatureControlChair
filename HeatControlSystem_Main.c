@@ -17,69 +17,67 @@
 
 
 /**
- * @brief A structure for the variables used inside the main function 
- * 
- */
-typedef struct{
-
-    uint16_t temp;
-    const char* tempvalue;
-
-}variables;
-
-variables var;
-
-/**
- * @brief Main function
+ * @brief Main function where code is executed
  * 
  * @return int 
  */
-int main(void)
-{
-    Buttons_LED_Init(); //Initialise the button input registers
-    Init_ADC(); //Initialise the ADC
-    TimerWaveGenMode(); //Initialise the registers for TIMER1 as fast PWM
-    UARTinit(103); //Initialise UART registers
-    
-    int i;
 
-    /**
-     * @brief Infinite loop to run the microcontroller
-     * 
-     */
+int main(void)
+{	
+	// Initializing registers required for various functions
+    peripheral_init();
+	adc_init();
+    pwm_init();
+    USARTInit(103);
+
+	//Messages showing temperature detected by sensor
+    uint16_t temp=0,previous=0;
+    char data1[]="Temperature:20°C\n";
+    char data2[]="Temperature:25°C\n";
+    char data3[]="Temperature:29°C\n";
+    char data4[]="Temperature:33°C\n";
+
     while(1)
     {
-       if(BUTTON_SENSOR_ON) //Checking if the input bit to 7th bit of pinB is made 0 from 1 by pressing led
+        if (!buttons())				
         {
-
-            if(HEATER_ON) //Checking if the input bit to 6th bit of pinB is made 0 from 1 by pressing led
-            {
-                _delay_ms(20);
-                SET_LED; //make 0th bit of port B as 1, makes led glow
-                var.temp = Read_ADC(0);
-                var.tempvalue = outputbyPWM(var.temp);
-                for(i=0;i<=5;i++){
-                UARTwritecharacter(var.tempvalue[i]);
-
-                }
-                _delay_ms(20);
-                
-            }
-            else
-            {
-                _delay_ms(20);
-                OCR1A = 0; //make PWM output 0 if switch is off
-                CLEAR_LED; // make led off
-            }
+            continue;
         }
         else
         {
-                
-                CLEAR_LED; //make led off
-                OCR1A = 0; //make PWM output 0 if both switches are off
-                _delay_ms(20);
+            while(1)
+            {   previous=temp;
+                temp=adc_read(0);
+                if (temp==previous)
+                {
+                    continue;
+                }
+                if (temp<=200)
+                {
+                    OCR0A=51;
+                    USARTWritestring(data1);
+                    _delay_ms(200);
+                }
+                else if(temp<=500)
+                {
+                    OCR0A=102;
+                    USARTWritestring(data2);
+                    _delay_ms(200);
+                }
+                else if(temp<=700)
+                {
+                    OCR0A=179;
+                    USARTWritestring(data3);
+                    _delay_ms(200);
+                }
+                else
+                {
+                    OCR0A=243;
+                    USARTWritestring(data4);
+                    _delay_ms(200);
+                }
+            }
         }
     }
-
- return 0;   
+    return 0;
 }
