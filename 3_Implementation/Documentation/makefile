@@ -1,4 +1,6 @@
-# Document the code using Doxygen
+DOXYFILE_NAME = Heatcontrolsystem
+all:
+	doxygen ./$(DOXYFILE_NAME)
 
-doc: Doxyfile
-	doxygen ./Doxyfile
+clean:
+	rm -rf html
