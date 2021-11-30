@@ -1,6 +1,6 @@
 /**
  * @file TemperatureControlChair_Main.c
- * @author Hemanth A (vdileep542@gmail.com)
+ * @author Dileep Varadaraju (vdileep542@gmail.com)
  * @brief The main program to execute the temperature control system in a chair
  * @version 0.1
  * @date 2021-11-30
