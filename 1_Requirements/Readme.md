@@ -41,7 +41,6 @@ Operated by detecting the Temperature
 | HLR2 | Temperature Sensor | IMPLEMENTED  |
 | HLR3 | Heat Generation | IMPLEMENTED  |
 | HLR4 | Display | IMPLEMENTED  |
-| HLR5 | Display | IMPLEMENTED  |
 
 ## Low Level Requirements
 | ID | Description | Status | 
